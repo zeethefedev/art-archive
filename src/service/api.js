@@ -1,7 +1,7 @@
 const BASE_URL = 'https://api.artic.edu/api/v1'
 const IMAGE_URL = 'https://www.artic.edu/iiif/2'
 
-export const fetchArtwork = async () => {
+export const fetchArtworks = async () => {
   const response = await fetch(`${BASE_URL}/artworks`)
   const { data } = await response.json()
   return data
@@ -10,8 +10,21 @@ export const fetchArtwork = async () => {
 export const fetchArtById = async (id) => {
   //https://api.artic.edu/api/v1/artworks/202823
   const response = await fetch(`${BASE_URL}/artworks/${id}`)
-  const data = await response.json()
+  const { data } = await response.json()
   return data
+}
+
+export const fetchArtworkImages = async (artworkIds) => {
+  const promises = artworkIds.map(async (id) => {
+    const artwork = await fetchArtById(id)
+    return { [id]: artwork.image_id }
+  })
+
+  const artworks = {}
+  for (const result of await Promise.all(promises)) {
+    Object.assign(artworks, result)
+  }
+  return artworks
 }
 
 export const fetchCategories = async () => {
@@ -27,7 +40,7 @@ export const getImageURL = (id) => {
   return image
 }
 
-export const searchArt = async (queryString) => {
+export const searchArtworks = async (queryString) => {
   //https://api.artic.edu/api/v1/artworks/search?q=monet
   const response = await fetch(`${BASE_URL}/artworks/search?q=${queryString}`)
   const { data } = await response.json()

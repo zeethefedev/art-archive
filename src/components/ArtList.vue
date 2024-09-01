@@ -2,7 +2,7 @@
   <div>
     <h1 class="text-2xl">art List</h1>
     <div v-if="artworks.length">
-      <art-card v-for="art in artworks" :artworks="art" :key="art.id" />
+      <art-card v-for="art in artworks" :art="art" :key="art.id" />
     </div>
     <div v-else>No data to display</div>
   </div>

@@ -1,9 +1,11 @@
 <template>
-  <div class="flex gap-2">
-    <label>
-      <input :value="search" @input="handleChange" />
-    </label>
-    <div v-if="error">{{ message }}</div>
+  <div class="flex items-start gap-2">
+    <div class="">
+      <label>
+        <input :value="search" @input="handleChange" />
+      </label>
+      <div v-if="message">{{ message }}</div>
+    </div>
     <button @click="$emit('search', search)">Search</button>
   </div>
 </template>

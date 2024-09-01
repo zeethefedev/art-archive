@@ -1,19 +1,30 @@
-import { fetchCategories } from '@/service/api'
+import { fetchArtById, fetchArtworkImages, fetchCategories, searchArtworks } from '@/service/api'
 import { createStore } from 'vuex'
 
 export const store = createStore({
   state() {
     return {
       artworks: [],
-      results: []
+      results: [],
+      loading: false,
+      error: false
     }
   },
   mutations: {
     setArtworks(state, payload) {
       state.artworks = payload
     },
+    resetArtWorks(state) {
+      state.artworks = []
+    },
     setResults(state, payload) {
       state.results = payload
+    },
+    startLoading(state) {
+      state.loading = true
+    },
+    stopLoading(state) {
+      state.loading = false
     }
     // add(state, payload) {
     //   const newToDo = { id: state.todoItems.length, text: payload, done: false }
@@ -33,10 +44,36 @@ export const store = createStore({
     // }
   },
   actions: {
+    async search({ commit }, payload) {
+      commit('resetArtWorks')
+      commit('startLoading')
+      const artworkSearchResults = await searchArtworks(payload)
+      const artworkIds = artworkSearchResults.map((art) => art.id)
+      const artworkImages = await fetchArtworkImages(artworkIds)
+
+      const artworks = artworkSearchResults.map((result) => ({
+        ...result,
+        image_id: artworkImages[result.id]
+      }))
+
+      commit('setArtworks', artworks)
+      commit('stopLoading')
+    },
+    // async getArtwork({ commit }, payload) {
+    //   const artwork = await fetchArtById(payload)
+    //   commit('setArtworks', artworks)
+    // },
     async getCategories({ commit }) {
       const categories = await fetchCategories()
       commit('setResults', categories)
     },
-    async searchArt({ commit }, payload) {}
+    async getArtists({ commit }) {
+      // const categories = await fetchCategories()
+      // commit('setResults', categories)
+    },
+    async getStyles({ commit }) {
+      // const categories = await fetchCategories()
+      // commit('setResults', categories)
+    }
   }
 })
