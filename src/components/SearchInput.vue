@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 export default {
   props: {
@@ -24,6 +24,8 @@ export default {
     const handleChange = (event) => {
       search.value = event.target.value
     }
+
+    onMounted(async () => {})
 
     return { search, handleChange }
   }

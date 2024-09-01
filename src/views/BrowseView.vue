@@ -1,15 +1,15 @@
 <template>
   <div>
     <filter-select />
-    <manga-list />
+    <art-list />
   </div>
 </template>
 
 <script>
+import ArtList from '@/components/ArtList.vue'
 import FilterSelect from '@/components/FilterSelect.vue'
-import MangaList from '@/components/MangaList.vue'
 export default {
-  components: { FilterSelect, MangaList }
+  components: { FilterSelect, ArtList }
 }
 </script>
 

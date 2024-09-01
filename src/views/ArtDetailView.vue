@@ -1,5 +1,5 @@
 <template>
-  <div>Manga Detail</div>
+  <div>art Detail</div>
 </template>
 
 <script>

@@ -5,11 +5,11 @@
 <script>
 export default {
   props: {
-    manga: {
+    art: {
       type: Object
     }
   },
-  setup({ manga }) {}
+  setup({ art }) {}
 }
 </script>
 

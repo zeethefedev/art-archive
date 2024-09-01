@@ -1,4 +1,4 @@
-import MangaListView from '@/views/MangaListView.vue'
+import ArtListView from '@/views/ArtListView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -6,8 +6,8 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'manga-list',
-      component: MangaListView
+      name: 'art-list',
+      component: ArtListView
     },
     {
       path: '/browse',
@@ -15,9 +15,9 @@ const router = createRouter({
       component: () => import('../views/BrowseView.vue')
     },
     {
-      path: '/manga/:id',
-      name: 'mange-detail',
-      component: () => import('../views/MangaDetailView.vue')
+      path: '/art/:id',
+      name: 'art-detail',
+      component: () => import('../views/ArtDetailView.vue')
     }
   ]
 })
