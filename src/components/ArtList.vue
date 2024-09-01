@@ -1,8 +1,8 @@
 <template>
   <div>
     <h1 class="text-2xl">art List</h1>
-    <div v-if="arts.length">
-      <art-card v-for="art in arts" :art="art" :key="art.id" />
+    <div v-if="artworks.length">
+      <art-card v-for="art in artworks" :artworks="art" :key="art.id" />
     </div>
     <div v-else>No data to display</div>
   </div>
@@ -15,12 +15,12 @@ import ArtCard from './ArtCard.vue'
 export default {
   components: { ArtCard },
   props: {
-    arts: {
+    artworks: {
       type: Array,
       default: []
     }
   },
-  setup({ arts }) {}
+  setup({ artworks }) {}
 }
 </script>
 

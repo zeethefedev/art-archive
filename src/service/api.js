@@ -1,7 +1,7 @@
 const BASE_URL = 'https://api.artic.edu/api/v1'
 const IMAGE_URL = 'https://www.artic.edu/iiif/2'
 
-export const fetchArts = async () => {
+export const fetchArtwork = async () => {
   const response = await fetch(`${BASE_URL}/artworks`)
   const { data } = await response.json()
   return data

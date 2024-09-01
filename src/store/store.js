@@ -4,13 +4,13 @@ import { createStore } from 'vuex'
 export const store = createStore({
   state() {
     return {
-      arts: [],
+      artworks: [],
       results: []
     }
   },
   mutations: {
-    setArts(state, payload) {
-      state.arts = payload
+    setArtworks(state, payload) {
+      state.artworks = payload
     },
     setResults(state, payload) {
       state.results = payload
