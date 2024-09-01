@@ -9,27 +9,25 @@
 </template>
 
 <script>
-import { fetchCategories } from '@/service/api'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import ResultList from './ResultList.vue'
+import { useStore } from 'vuex'
+import { FILTERS, filterToActions } from '@/service/utils'
 
 export default {
   components: { ResultList },
   setup() {
-    const filterOptions = ref(['category', 'artist', 'style'])
-    const results = ref([])
+    const filterOptions = ref(FILTERS)
+
+    const store = useStore()
+    const results = computed(() => store.state.results)
+
     const handleChange = async (event) => {
       const filterValue = event.target.value
 
-      switch (filterValue) {
-        case 'category':
-          results.value = await fetchCategories()
-          break
-        case 'artist':
-          break
-        case 'style':
-          break
-      }
+      const filterAction = filterToActions[filterValue]
+
+      store.dispatch(filterAction)
     }
 
     return { filterOptions, handleChange, results }
