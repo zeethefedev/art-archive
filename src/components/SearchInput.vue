@@ -1,19 +1,27 @@
 <template>
   <div class="flex gap-2">
     <label>
-      <!-- Search -->
       <input :value="search" @input="handleChange" />
     </label>
+    <div v-if="error">{{ message }}</div>
     <button @click="$emit('search', search)">Search</button>
   </div>
 </template>
 
 <script>
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 
 export default {
   props: {
     value: {
+      type: String,
+      default: ''
+    },
+    error: {
+      type: Boolean,
+      default: false
+    },
+    message: {
       type: String,
       default: ''
     }
@@ -24,8 +32,6 @@ export default {
     const handleChange = (event) => {
       search.value = event.target.value
     }
-
-    onMounted(async () => {})
 
     return { search, handleChange }
   }

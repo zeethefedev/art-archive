@@ -5,20 +5,34 @@
       {{ option }}
     </option>
   </select>
+  <result-list :items="results" />
 </template>
 
 <script>
+import { fetchCategories } from '@/service/api'
 import { ref } from 'vue'
+import ResultList from './ResultList.vue'
 
 export default {
+  components: { ResultList },
   setup() {
-    const filterOptions = ref(['category', 'rating', 'status'])
+    const filterOptions = ref(['category', 'artist', 'style'])
+    const results = ref([])
+    const handleChange = async (event) => {
+      const filterValue = event.target.value
 
-    const handleChange = (event) => {
-      console.log(event.target.value)
+      switch (filterValue) {
+        case 'category':
+          results.value = await fetchCategories()
+          break
+        case 'artist':
+          break
+        case 'style':
+          break
+      }
     }
 
-    return { filterOptions, handleChange }
+    return { filterOptions, handleChange, results }
   }
 }
 </script>

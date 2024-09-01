@@ -1,5 +1,5 @@
-const BASE_URL = 'https://api.artic.edu/api/v1/'
-const IMAGE_URL = 'https://www.artic.edu/iiif/2/'
+const BASE_URL = 'https://api.artic.edu/api/v1'
+const IMAGE_URL = 'https://www.artic.edu/iiif/2'
 
 export const fetchArts = async () => {
   const response = await fetch(`${BASE_URL}/artworks`)
@@ -17,7 +17,7 @@ export const fetchArtById = async (id) => {
 export const fetchCategories = async () => {
   //https://api.artic.edu/api/v1/categories
   const response = await fetch(`${BASE_URL}/categories`)
-  const data = await response.json()
+  const { data } = await response.json()
   return data
 }
 
@@ -29,7 +29,7 @@ export const getImageURL = (id) => {
 
 export const searchArt = async (queryString) => {
   //https://api.artic.edu/api/v1/artworks/search?q=monet
-  const response = await fetch(`${BASE_URL}/artworks/search?${queryString}`)
+  const response = await fetch(`${BASE_URL}/artworks/search?q=${queryString}`)
   const { data } = await response.json()
   return data
 }
