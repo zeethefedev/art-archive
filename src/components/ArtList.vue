@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import { ref } from 'vue'
 import ArtCard from './ArtCard.vue'
 
 export default {

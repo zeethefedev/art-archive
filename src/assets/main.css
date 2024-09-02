@@ -20,18 +20,15 @@ a {
   }
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-}
-
 /* element */
 button,
 fieldset,
 input,
-textarea {
+legend,
+textarea,
+option,
+li,
+ul {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -40,7 +37,14 @@ textarea {
   outline: 0px;
 }
 
-button {
+select {
+  background: url('/public/icon/down.svg') no-repeat center right 0.75rem;
+}
+
+button,
+select,
+option,
+li {
   font-size: 16px;
   line-height: 16px;
   font-weight: 800;
@@ -50,7 +54,8 @@ button {
   border: 2px var(--dark-blue) solid;
 }
 
-input {
+input,
+textarea {
   width: 100%;
   font-size: 14px;
   line-height: 16px;

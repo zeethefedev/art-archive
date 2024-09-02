@@ -1,7 +1,4 @@
-export const FILTERS = ['category', 'artist', 'style']
-
-export const filterToActions = {
-  category: 'getCategories',
-  artist: 'getArtists',
-  style: 'getStyles'
-}
+export const FILTERS = [
+  { id: 'categories', title: 'categories' },
+  { id: 'artists', title: 'artists' }
+]

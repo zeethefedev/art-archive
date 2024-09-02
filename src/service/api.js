@@ -34,15 +34,36 @@ export const fetchCategories = async () => {
   return data
 }
 
+export const fetchTerms = async (term) => {
+  const response = await fetch(`${BASE_URL}/${term}?limit=100`)
+  const { data } = await response.json()
+  return data
+}
+
 export const getImageURL = (id) => {
   //https://www.artic.edu/iiif/2/ee8c8903-ed55-c104-49d2-3bd36028d40b/full/843,/0/default.jpg
   const image = `${IMAGE_URL}/${id}/full/843,/0/default.jpg`
   return image
 }
 
-export const searchArtworks = async (queryString) => {
+export const searchArtworks = async (queryString, fields) => {
   //https://api.artic.edu/api/v1/artworks/search?q=monet
-  const response = await fetch(`${BASE_URL}/artworks/search?q=${queryString}`)
+  const fieldString = fields
+    ? `&fields=id,title,artist_display,date_display,thumbnail,${fields}`
+    : ''
+  const response = await fetch(`${BASE_URL}/artworks/search?q=${queryString}${fieldString}`)
+  const { data } = await response.json()
+  return data
+}
+
+export const searchArtworksByTerm = async (queryString, fields) => {
+  //https://api.artic.edu/api/v1/artworks/search?query[term][category_ids]=PC-3
+  const fieldString = fields
+    ? `&fields=id,title,artist_display,date_display,thumbnail,${fields}`
+    : ''
+  const response = await fetch(
+    `${BASE_URL}/artworks/search?query[term]${queryString}${fieldString}`
+  )
   const { data } = await response.json()
   return data
 }

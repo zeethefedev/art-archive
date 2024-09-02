@@ -1,4 +1,10 @@
-import { fetchArtById, fetchArtworkImages, fetchCategories, searchArtworks } from '@/service/api'
+import {
+  fetchArtById,
+  fetchCategories,
+  fetchTerms,
+  searchArtworks,
+  searchArtworksByTerm
+} from '@/service/api'
 import { createStore } from 'vuex'
 
 export const store = createStore({
@@ -6,6 +12,7 @@ export const store = createStore({
     return {
       artworks: [],
       results: [],
+      currentArtwork: {},
       loading: false,
       error: false
     }
@@ -16,6 +23,9 @@ export const store = createStore({
     },
     resetArtWorks(state) {
       state.artworks = []
+    },
+    setCurrentArtwork(state, payload) {
+      state.currentArtwork = payload
     },
     setResults(state, payload) {
       state.results = payload
@@ -47,33 +57,34 @@ export const store = createStore({
     async search({ commit }, payload) {
       commit('resetArtWorks')
       commit('startLoading')
-      const artworkSearchResults = await searchArtworks(payload)
-      const artworkIds = artworkSearchResults.map((art) => art.id)
-      const artworkImages = await fetchArtworkImages(artworkIds)
-
-      const artworks = artworkSearchResults.map((result) => ({
-        ...result,
-        image_id: artworkImages[result.id]
-      }))
+      const artworks = await searchArtworks(payload, 'image_id')
 
       commit('setArtworks', artworks)
       commit('stopLoading')
     },
-    // async getArtwork({ commit }, payload) {
-    //   const artwork = await fetchArtById(payload)
-    //   commit('setArtworks', artworks)
-    // },
+    //should combine with search
+    async searchBy({ commit }, payload) {
+      commit('resetArtWorks')
+      commit('startLoading')
+      const artworks = await searchArtworksByTerm(payload, 'image_id')
+
+      commit('setArtworks', artworks)
+      commit('stopLoading')
+    },
+    async getArtwork({ commit }, payload) {
+      const currentArtwork = await fetchArtById(payload)
+
+      console.log(currentArtwork)
+      commit('setCurrentArtwork', currentArtwork)
+    },
     async getCategories({ commit }) {
       const categories = await fetchCategories()
       commit('setResults', categories)
     },
-    async getArtists({ commit }) {
-      // const categories = await fetchCategories()
-      // commit('setResults', categories)
-    },
-    async getStyles({ commit }) {
-      // const categories = await fetchCategories()
-      // commit('setResults', categories)
+    async getArtists({ commit }) {},
+    async getTerms({ commit }, payload) {
+      const terms = await fetchTerms(payload)
+      commit('setResults', terms)
     }
   }
 })
