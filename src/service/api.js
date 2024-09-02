@@ -46,24 +46,26 @@ export const getImageURL = (id) => {
   return image
 }
 
-export const searchArtworks = async (queryString, fields) => {
-  //https://api.artic.edu/api/v1/artworks/search?q=monet
-  const fieldString = fields
-    ? `&fields=id,title,artist_display,date_display,thumbnail,${fields}`
-    : ''
-  const response = await fetch(`${BASE_URL}/artworks/search?q=${queryString}${fieldString}`)
-  const { data } = await response.json()
-  return data
-}
-
-export const searchArtworksByTerm = async (queryString, fields) => {
+export const searchArtworks = async (q, fields, queries) => {
   //https://api.artic.edu/api/v1/artworks/search?query[term][category_ids]=PC-3
-  const fieldString = fields
-    ? `&fields=id,title,artist_display,date_display,thumbnail,${fields}`
-    : ''
-  const response = await fetch(
-    `${BASE_URL}/artworks/search?query[term]${queryString}${fieldString}`
-  )
+  const qString = q ? `q=${q}` : ''
+
+  const defaultFields = ['id', 'title', 'artist_display', 'date_display', 'thumbnail']
+  const fieldString =
+    fields && fields.length ? `fields=${defaultFields.join(',')},${fields.join(',')}` : ''
+
+  let queryString = ''
+  const queriesExists = queries && Object.entries(queries).length
+  if (queriesExists) {
+    const [queryTerm] =
+      queriesExists && Object.entries(queries).map(([key, value]) => `[${key}_ids]=${value}`)
+    queryString = `query[term]${queryTerm}`
+  }
+
+  const searchString = `${[qString, queryString, fieldString].filter((str) => str).join('&')}`
+
+  const response = await fetch(`${BASE_URL}/artworks/search?${searchString}`)
+
   const { data } = await response.json()
   return data
 }

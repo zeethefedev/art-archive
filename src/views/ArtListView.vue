@@ -1,7 +1,8 @@
 <template>
   <div>
-    <search-input @search="handleSearch" :message="message" />
+    <search-input @search="handleSearch" class="mb-4" />
     <art-list :artworks="artworks" />
+    <div>{{ message }}</div>
   </div>
 </template>
 
@@ -18,17 +19,33 @@ export default {
     const artworks = computed(() => store.state.artworks)
     const loading = computed(() => store.state.loading)
     const message = ref('')
+    const touched = ref(false)
 
     watch(loading, (loading) => {
-      if (loading) message.value = 'Loading...'
-      else message.value = ''
+      if (loading) {
+        message.value = 'Loading...'
+      } else {
+        if (!artworks.value.length && touched) {
+          message.value = 'No data to display'
+        } else {
+          message.value = ''
+        }
+      }
     })
 
     const handleSearch = (search) => {
-      store.dispatch('search', search)
+      const valid = handleValidate(search)
+
+      valid && store.dispatch('search', search)
     }
 
-    const handleValidate = (search) => {}
+    const handleValidate = (search) => {
+      touched.value = true
+      if (!search) {
+        message.value = 'Please fill in search'
+        return false
+      } else return true
+    }
 
     return { artworks, handleSearch, loading, message }
   }

@@ -37,10 +37,6 @@ ul {
   outline: 0px;
 }
 
-select {
-  background: url('/public/icon/down.svg') no-repeat center right 0.75rem;
-}
-
 button,
 select,
 option,
@@ -133,4 +129,8 @@ form {
 
 .text-color-red {
   color: var(--hot-pink);
+}
+
+.clickable {
+  cursor: pointer;
 }

@@ -1,10 +1,4 @@
-import {
-  fetchArtById,
-  fetchCategories,
-  fetchTerms,
-  searchArtworks,
-  searchArtworksByTerm
-} from '@/service/api'
+import { fetchArtById, fetchCategories, fetchTerms, searchArtworks } from '@/service/api'
 import { createStore } from 'vuex'
 
 export const store = createStore({
@@ -29,6 +23,9 @@ export const store = createStore({
     },
     setResults(state, payload) {
       state.results = payload
+    },
+    resetResults(state) {
+      state.results = []
     },
     startLoading(state) {
       state.loading = true
@@ -57,16 +54,15 @@ export const store = createStore({
     async search({ commit }, payload) {
       commit('resetArtWorks')
       commit('startLoading')
-      const artworks = await searchArtworks(payload, 'image_id')
+      const artworks = await searchArtworks(payload, ['image_id'])
 
       commit('setArtworks', artworks)
       commit('stopLoading')
     },
-    //should combine with search
     async searchBy({ commit }, payload) {
       commit('resetArtWorks')
       commit('startLoading')
-      const artworks = await searchArtworksByTerm(payload, 'image_id')
+      const artworks = await searchArtworks('', ['image_id'], payload)
 
       commit('setArtworks', artworks)
       commit('stopLoading')
@@ -74,7 +70,6 @@ export const store = createStore({
     async getArtwork({ commit }, payload) {
       const currentArtwork = await fetchArtById(payload)
 
-      console.log(currentArtwork)
       commit('setCurrentArtwork', currentArtwork)
     },
     async getCategories({ commit }) {

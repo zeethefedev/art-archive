@@ -1,10 +1,8 @@
 <template>
   <div>
-    <h1 class="text-2xl">art List</h1>
-    <div v-if="artworks.length">
+    <div v-if="artworks.length" class="flex flex-wrap gap-4">
       <art-card v-for="art in artworks" :art="art" :key="art.id" />
     </div>
-    <div v-else>No data to display</div>
   </div>
 </template>
 

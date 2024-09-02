@@ -3,6 +3,11 @@ export const FILTERS = [
   { id: 'artists', title: 'artists' }
 ]
 
+export const filterToTerm = {
+  categories: 'category',
+  artists: 'artist'
+}
+
 // source: https://reactsvgicons.com/
 export const ICONS = {
   heart: {

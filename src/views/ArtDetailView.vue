@@ -4,14 +4,13 @@
 
 <script>
 import { computed, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import ArtDetail from '@/components/ArtDetail.vue'
 
 export default {
   components: { ArtDetail },
   setup() {
-    // const router = useRouter()
     const route = useRoute()
     const id = route.params.id
 
