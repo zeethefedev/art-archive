@@ -1,12 +1,33 @@
 <template>
-  <SVGIcon @click="$emit('click')" icon="heart" width="2em" height="2em" />
+  <SVGIcon v-if="liked" @click="$emit('clickLike')" icon="heart-fill" width="2em" height="2em" />
+  <SVGIcon v-else @click="$emit('clickLike')" icon="heart" width="2em" height="2em" />
 </template>
 
 <script>
+import { computed, ref, watch } from 'vue'
 import SVGIcon from './SVGIcon.vue'
+import { useStore } from 'vuex'
 export default {
   components: { SVGIcon },
-  setup() {}
+  props: {
+    art: {
+      type: Object
+    }
+  },
+  setup({ art }) {
+    const { id } = art
+    const store = useStore()
+
+    //check liked
+    const liked = computed(() => store.state.likedArtworks.includes(id))
+    const icon = ref(liked.value ? 'heart-fill' : 'heart')
+
+    watch(liked, (liked) => {
+      icon.value = liked.value ? 'heart-fill' : 'heart'
+    })
+
+    return { icon, liked }
+  }
 }
 </script>
 

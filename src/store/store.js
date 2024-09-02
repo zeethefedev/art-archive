@@ -8,7 +8,8 @@ export const store = createStore({
       results: [],
       currentArtwork: {},
       loading: false,
-      error: false
+      error: false,
+      likedArtworks: [16568, 14624]
     }
   },
   mutations: {
@@ -32,6 +33,17 @@ export const store = createStore({
     },
     stopLoading(state) {
       state.loading = false
+    },
+    toggleLike(state, payload) {
+      const artworkExists = state.likedArtworks.includes(payload)
+      let newLikedArtworks = state.likedArtworks
+      if (artworkExists) {
+        newLikedArtworks = state.likedArtworks.filter((artwork) => artwork !== payload)
+      } else {
+        newLikedArtworks = [...state.likedArtworks, payload]
+      }
+
+      state.likedArtworks = newLikedArtworks
     }
     // add(state, payload) {
     //   const newToDo = { id: state.todoItems.length, text: payload, done: false }
