@@ -13,7 +13,6 @@ import { useStore } from 'vuex'
 
 export default {
   components: { ArtList, SearchInput },
-
   setup() {
     const store = useStore()
     const artworks = computed(() => store.state.artworks)
