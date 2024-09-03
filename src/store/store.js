@@ -52,8 +52,8 @@ export const store = createStore({
       }
       state.likedArtworks = newLikedArtworks
     },
-    saveLike(state, payload) {
-      state.initialLikedArtworks = payload
+    saveLike(state) {
+      state.initialLikedArtworks = state.likedArtworks
     }
   },
   actions: {

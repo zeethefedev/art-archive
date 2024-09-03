@@ -34,7 +34,7 @@ export default {
     }
 
     const handleSave = () => {
-      store.commit('saveLike', artworks)
+      store.commit('saveLike')
       handleClose()
     }
 

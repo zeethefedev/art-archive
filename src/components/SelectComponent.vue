@@ -2,6 +2,7 @@
   <div class="w-full">
     <div class="capitalize">{{ label }}</div>
     <select @change="$emit('change', $event)" class="w-full" :name="name">
+      <option hidden></option>
       <option v-for="option in options" :key="option" :value="option.id" @click="$emit('select')">
         {{ option.title }}
       </option>

@@ -20,6 +20,7 @@ export default {
     const message = ref('')
 
     onMounted(() => {
+      store.commit('resetResults')
       store.commit('resetArtWorks')
     })
 

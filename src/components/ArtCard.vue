@@ -17,7 +17,7 @@
 
 <script>
 import { getImageURL } from '@/service/api'
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import LikeButton from './LikeButton.vue'
 import { useStore } from 'vuex'
@@ -37,7 +37,6 @@ export default {
     const image = getImageURL(image_id)
 
     const store = useStore()
-    const artworks = computed(() => store.state.likedArtworks)
 
     const handleClickArt = () => {
       router.push({ path: `art/${id}` })
@@ -46,7 +45,7 @@ export default {
     const handleLikeArt = () => {
       store.commit('toggleLike', art)
       if (!isSavedPage) {
-        store.commit('saveLike', artworks)
+        store.commit('saveLike')
       }
     }
 
