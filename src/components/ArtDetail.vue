@@ -28,6 +28,7 @@
 import { getImageURL } from '@/service/api'
 import LikeButton from './LikeButton.vue'
 import { useStore } from 'vuex'
+import { computed } from 'vue'
 
 export default {
   components: { LikeButton },
@@ -51,10 +52,12 @@ export default {
     } = art
 
     const store = useStore()
+    const artworks = computed(() => store.state.likedArtworks)
 
     const image = getImageURL(image_id)
     const handleLikeArt = () => {
       store.commit('toggleLike', art)
+      store.commit('saveLike', artworks)
     }
 
     return {

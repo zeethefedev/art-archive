@@ -47,7 +47,6 @@ export const store = createStore({
       } else {
         newLikedArtworks = [...state.likedArtworks, current]
       }
-
       state.likedArtworks = newLikedArtworks
     },
     saveLike(state, payload) {

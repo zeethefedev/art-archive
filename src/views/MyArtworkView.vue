@@ -1,5 +1,5 @@
 <template>
-  <art-list :artworks="initialArtworks" />
+  <art-list :artworks="initialArtworks" :isSavedPage="true" />
   <button @click="handleOpen">Save</button>
   <confirm-popup :open="open" @click="handleClose">
     <h2 class="text-xl mb-4">Do you want to save your new artworks?</h2>
