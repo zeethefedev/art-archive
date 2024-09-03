@@ -9,7 +9,7 @@
 <script>
 import SearchInput from '@/components/SearchInput.vue'
 import ArtList from '@/components/ArtList.vue'
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
@@ -46,6 +46,10 @@ export default {
         return false
       } else return true
     }
+
+    onMounted(() => {
+      store.commit('resetArtWorks')
+    })
 
     return { artworks, handleSearch, loading, message }
   }

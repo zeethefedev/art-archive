@@ -14,26 +14,6 @@ export const fetchArtById = async (id) => {
   return data
 }
 
-export const fetchArtworkImages = async (artworkIds) => {
-  const promises = artworkIds.map(async (id) => {
-    const artwork = await fetchArtById(id)
-    return { [id]: artwork.image_id }
-  })
-
-  const artworks = {}
-  for (const result of await Promise.all(promises)) {
-    Object.assign(artworks, result)
-  }
-  return artworks
-}
-
-export const fetchCategories = async () => {
-  //https://api.artic.edu/api/v1/categories
-  const response = await fetch(`${BASE_URL}/categories`)
-  const { data } = await response.json()
-  return data
-}
-
 export const fetchTerms = async (term) => {
   const response = await fetch(`${BASE_URL}/${term}?limit=100`)
   const { data } = await response.json()

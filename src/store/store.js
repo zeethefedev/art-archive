@@ -1,4 +1,4 @@
-import { fetchArtById, fetchCategories, fetchTerms, searchArtworks } from '@/service/api'
+import { fetchArtById, fetchTerms, searchArtworks } from '@/service/api'
 import { LIKED_ARTWORKS } from '@/service/utils'
 import { createStore } from 'vuex'
 
@@ -23,6 +23,9 @@ export const store = createStore({
     },
     setCurrentArtwork(state, payload) {
       state.currentArtwork = payload
+    },
+    resetCurrentArtwork(state) {
+      state.currentArtwork = {}
     },
     setResults(state, payload) {
       state.results = payload
@@ -52,22 +55,6 @@ export const store = createStore({
     saveLike(state, payload) {
       state.initialLikedArtworks = payload
     }
-    // add(state, payload) {
-    //   const newToDo = { id: state.todoItems.length, text: payload, done: false }
-    //   const newToDos = [...state.todoItems, newToDo]
-    //   state.todoItems = newToDos
-    //   console.log(state.todoItems)
-    // },
-    // delete(state, payload) {
-    //   const { id } = payload
-    //   const newToDos = state.todoItems.filter((todo) => todo.id !== id)
-    //   state.todoItems = newToDos
-    // },
-    // edit(state, payload) {
-    //   const { id } = payload
-    //   const newToDos = state.todoItems.map((todo) => (todo.id === id ? payload : todo))
-    //   state.todoItems = newToDos
-    // }
   },
   actions: {
     async search({ commit }, payload) {
@@ -87,18 +74,19 @@ export const store = createStore({
       commit('stopLoading')
     },
     async getArtwork({ commit }, payload) {
+      commit('resetCurrentArtwork')
+      commit('startLoading')
       const currentArtwork = await fetchArtById(payload)
 
       commit('setCurrentArtwork', currentArtwork)
+      commit('stopLoading')
     },
-    async getCategories({ commit }) {
-      const categories = await fetchCategories()
-      commit('setResults', categories)
-    },
-    async getArtists({ commit }) {},
     async getTerms({ commit }, payload) {
+      commit('startLoading')
       const terms = await fetchTerms(payload)
+
       commit('setResults', terms)
+      commit('stopLoading')
     }
   }
 })
