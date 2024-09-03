@@ -3,6 +3,7 @@
     <nav>
       <router-link to="/">Home</router-link>
       <router-link to="/browse">Browse</router-link>
+      <router-link to="/my-artworks">My artworks</router-link>
     </nav>
   </div>
 </template>

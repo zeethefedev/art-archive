@@ -42,7 +42,7 @@ export default {
     }
 
     const handleLikeArt = () => {
-      store.commit('toggleLike', id)
+      store.commit('toggleLike', art)
     }
 
     return { artData, handleClickArt, image, handleLikeArt }

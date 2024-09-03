@@ -1,4 +1,5 @@
 import { fetchArtById, fetchCategories, fetchTerms, searchArtworks } from '@/service/api'
+import { LIKED_ARTWORKS } from '@/service/utils'
 import { createStore } from 'vuex'
 
 export const store = createStore({
@@ -9,7 +10,8 @@ export const store = createStore({
       currentArtwork: {},
       loading: false,
       error: false,
-      likedArtworks: [16568, 14624]
+      likedArtworks: LIKED_ARTWORKS,
+      initialLikedArtworks: LIKED_ARTWORKS
     }
   },
   mutations: {
@@ -35,15 +37,21 @@ export const store = createStore({
       state.loading = false
     },
     toggleLike(state, payload) {
-      const artworkExists = state.likedArtworks.includes(payload)
+      const likedArtworkIds = state.likedArtworks.map((artwork) => artwork.id)
+      const current = payload
+      const artworkExists = likedArtworkIds.includes(current.id)
       let newLikedArtworks = state.likedArtworks
+
       if (artworkExists) {
-        newLikedArtworks = state.likedArtworks.filter((artwork) => artwork !== payload)
+        newLikedArtworks = state.likedArtworks.filter((artwork) => artwork.id !== current.id)
       } else {
-        newLikedArtworks = [...state.likedArtworks, payload]
+        newLikedArtworks = [...state.likedArtworks, current]
       }
 
       state.likedArtworks = newLikedArtworks
+    },
+    saveLike(state, payload) {
+      state.initialLikedArtworks = payload
     }
     // add(state, payload) {
     //   const newToDo = { id: state.todoItems.length, text: payload, done: false }

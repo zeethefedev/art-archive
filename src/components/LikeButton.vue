@@ -19,7 +19,8 @@ export default {
     const store = useStore()
 
     //check liked
-    const liked = computed(() => store.state.likedArtworks.includes(id))
+    const likedArtworks = computed(() => store.state.likedArtworks.map((artwork) => artwork.id))
+    const liked = computed(() => likedArtworks.value.includes(id))
     const icon = ref(liked.value ? 'heart-fill' : 'heart')
 
     watch(liked, (liked) => {

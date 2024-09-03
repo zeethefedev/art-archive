@@ -4,7 +4,7 @@
     <div>
       <h1 class="text-2xl">{{ title }}</h1>
       <div class="text-sm">{{ artist_display }}</div>
-
+      <like-button :art="art" @click="handleLikeArt" />
       <div class="mt-4">
         Artists:
         <span v-for="artist in artist_titles" :key="artist">{{ artist }}</span>
@@ -26,8 +26,11 @@
 
 <script>
 import { getImageURL } from '@/service/api'
+import LikeButton from './LikeButton.vue'
+import { useStore } from 'vuex'
 
 export default {
+  components: { LikeButton },
   props: {
     art: {
       type: Object
@@ -47,7 +50,12 @@ export default {
       thumbnail
     } = art
 
+    const store = useStore()
+
     const image = getImageURL(image_id)
+    const handleLikeArt = () => {
+      store.commit('toggleLike', art)
+    }
 
     return {
       id,
@@ -59,7 +67,8 @@ export default {
       description,
       medium_display,
       style_titles,
-      thumbnail
+      thumbnail,
+      handleLikeArt
     }
   }
 }
