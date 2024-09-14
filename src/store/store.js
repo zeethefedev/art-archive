@@ -1,10 +1,11 @@
 import { fetchArtById, fetchTerms, searchArtworks } from '@/service/api'
-import { LIKED_ARTWORKS } from '@/service/utils'
+import { clearFromStorage, getFromStorage, LIKED_ARTWORKS, saveToStorage } from '@/service/utils'
 import { createStore } from 'vuex'
 
 export const store = createStore({
   state() {
     return {
+      user: null,
       artworks: [],
       results: [],
       currentArtwork: {},
@@ -54,6 +55,18 @@ export const store = createStore({
     },
     saveLike(state) {
       state.initialLikedArtworks = state.likedArtworks
+    },
+    setUser(state) {
+      const userInfo = getFromStorage('USER')
+      state.user = userInfo
+    },
+    login(state, payload) {
+      state.user = payload
+      saveToStorage('USER', state.user)
+    },
+    logout(state) {
+      state.user = null
+      clearFromStorage('USER')
     }
   },
   actions: {

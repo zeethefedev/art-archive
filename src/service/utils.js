@@ -1,3 +1,6 @@
+export const USERNAME = 'diepanh'
+export const PASSWORD = 'da123'
+
 export const FILTERS = [
   { id: 'categories', title: 'categories' },
   { id: 'artists', title: 'artists' }
@@ -56,3 +59,20 @@ export const LIKED_ARTWORKS = [
     title: 'Stacks of Wheat (End of Summer)'
   }
 ]
+
+export const saveToStorage = (key, value) => {
+  sessionStorage.setItem(key, JSON.stringify(value))
+}
+
+export const getFromStorage = (key) => {
+  let data = sessionStorage.getItem(key)
+  return JSON.parse(data)
+}
+
+export const clearFromStorage = (key) => {
+  if (!key) {
+    sessionStorage.clear()
+  } else {
+    sessionStorage.removeItem(key)
+  }
+}
