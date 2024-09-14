@@ -1,6 +1,7 @@
 <template>
   <div>
     <filter-select />
+    <date-picker v-if="results.length" />
     <art-list :artworks="artworks" />
     <div>{{ message }}</div>
   </div>
@@ -11,11 +12,13 @@ import ArtList from '@/components/ArtList.vue'
 import FilterSelect from '@/components/FilterSelect.vue'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useStore } from 'vuex'
+import DatePicker from '@/components/DatePicker.vue'
 export default {
-  components: { FilterSelect, ArtList },
+  components: { FilterSelect, ArtList, DatePicker },
   setup() {
     const store = useStore()
     const artworks = computed(() => store.state.artworks)
+    const results = computed(() => store.state.results)
     const loading = computed(() => store.state.loading)
     const message = ref('')
 
@@ -36,7 +39,7 @@ export default {
       }
     })
 
-    return { artworks, message }
+    return { artworks, message, results }
   }
 }
 </script>

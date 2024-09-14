@@ -67,6 +67,15 @@ export const store = createStore({
     logout(state) {
       state.user = null
       clearFromStorage('USER')
+    },
+    filterArtworks(state, payload) {
+      const [start, end] = payload
+      const newArtworks = state.artworks.filter(
+        (artwork) => artwork.date_start >= start && artwork.date_end <= end
+      )
+
+      state.artworks = newArtworks
+      // console.log(newArtworks)
     }
   },
   actions: {

@@ -30,7 +30,15 @@ export const searchArtworks = async (q, fields, queries) => {
   //https://api.artic.edu/api/v1/artworks/search?query[term][category_ids]=PC-3
   const qString = q ? `q=${q}` : ''
 
-  const defaultFields = ['id', 'title', 'artist_display', 'date_display', 'thumbnail']
+  const defaultFields = [
+    'id',
+    'title',
+    'artist_display',
+    'date_display',
+    'thumbnail',
+    'date_start',
+    'date_end'
+  ]
   const fieldString =
     fields && fields.length ? `fields=${defaultFields.join(',')},${fields.join(',')}` : ''
 
